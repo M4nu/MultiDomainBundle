@@ -12,7 +12,6 @@
         <service id="m4nu_multi_domain.base_path_resolver" class="%m4nu_multi_domain.base_path_resolver.class%">
             <argument type="service" id="request_stack" />
             <argument>%cmf_routing.dynamic.persistence.phpcr.route_basepaths%</argument>
-            <argument />
         </service>
     </services>
 </container>

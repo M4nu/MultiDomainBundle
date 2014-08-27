@@ -42,12 +42,3 @@ public function registerBundles()
     );
 )
 ```
-
-### Configuration
-
-You must define at least 1 domain, for example :
-
-``` yaml
-# app/config/config.yml
-m4nu_multi_domain:
-    domains: [ www.example.org, fr.example.org ]
