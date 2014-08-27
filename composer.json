@@ -1,0 +1,19 @@
+{
+    "name": "manu/multi-domain-bundle",
+    "description": "Adds multi-domain capabilities to Symfony Cmf RoutingBundle",
+    "require": {
+        "php": ">=5.3.3",
+        "symfony-cmf/routing-bundle": "~1.2",
+        "symfony/framework-bundle": "~2.4"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Emmanuel Vella",
+            "email": "vella.emmanuel@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "M4nu\\MultiDomainBundle\\": "" }
+    }
+}

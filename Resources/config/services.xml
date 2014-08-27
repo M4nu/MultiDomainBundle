@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="m4nu_multi_domain.base_path_resolver.class">M4nu\MultiDomainBundle\Resolver\MultiDomainBasePathResolver</parameter>
+    </parameters>
+
+    <services>
+        <service id="m4nu_multi_domain.base_path_resolver" class="%m4nu_multi_domain.base_path_resolver.class%">
+            <argument type="service" id="request_stack" />
+            <argument>%cmf_routing.dynamic.persistence.phpcr.route_basepaths%</argument>
+            <argument />
+        </service>
+    </services>
+</container>
