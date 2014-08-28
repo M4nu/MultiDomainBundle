@@ -27,7 +27,12 @@ class M4nuMultiDomainExtension extends Extension
 
         $container
             ->getDefinition('m4nu_multi_domain.base_path_resolver')
-            ->replaceArgument(2, $config['domains'])
+            ->replaceArgument(1, $config['domains'])
+        ;
+
+        $container
+            ->getDefinition('m4nu_multi_domain.locale_listener')
+            ->replaceArgument(0, $config['domains'])
         ;
     }
 }
