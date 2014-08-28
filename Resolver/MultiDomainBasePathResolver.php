@@ -7,27 +7,34 @@ class MultiDomainBasePathResolver
 {
     private $requestStack;
     private $routeBasepaths;
+    private $domains;
 
-    function __construct(RequestStack $requestStack, array $routeBasepaths)
+    function __construct(RequestStack $requestStack, array $routeBasepaths, array $domains)
     {
         $this->requestStack = $requestStack;
         $this->routeBasepaths = $routeBasepaths;
+        $this->domains = $domains;
     }
 
     public function getRouteBasepaths()
     {
         if ($request = $this->requestStack->getCurrentRequest()) {
-            $domain = $request->getHost();
+            return $this->appendDomains(array($request->getHost()));
+        } else {
+            return $this->appendDomains($this->domains);
+        }
+    }
 
-            $routeBasePaths = array();
+    private function appendDomains(array $domains)
+    {
+        $routeBasePaths = array();
 
-            foreach ($this->routeBasepaths as $routeBasePath) {
+        foreach ($this->routeBasepaths as $routeBasePath) {
+            foreach ($domains as $domain) {
                 $routeBasePaths[] = sprintf('%s/%s', $routeBasePath, $domain);
             }
-
-            return $routeBasePaths;
         }
 
-        return $this->routeBasepaths;
+        return $routeBasePaths;
     }
 }
