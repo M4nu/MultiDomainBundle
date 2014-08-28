@@ -6,6 +6,7 @@
 
     <parameters>
         <parameter key="m4nu_multi_domain.base_path_resolver.class">M4nu\MultiDomainBundle\Resolver\MultiDomainBasePathResolver</parameter>
+        <parameter key="m4nu_multi_domain.locale_listener.class">M4nu\MultiDomainBundle\EventListener\LocaleListener</parameter>
         <parameter key="m4nu_multi_domain.route_host_listener.class">M4nu\MultiDomainBundle\EventListener\RouteHostListener</parameter>
     </parameters>
 
@@ -20,6 +21,11 @@
             <tag name="doctrine_phpcr.event_listener" event="postLoad" />
             <tag name="doctrine_phpcr.event_listener" event="postPersist" />
             <tag name="doctrine_phpcr.event_listener" event="postMove" />
+        </service>
+
+        <service id="m4nu_multi_domain.locale_listener" class="%m4nu_multi_domain.locale_listener.class%">
+            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" />
+            <argument />
         </service>
     </services>
 </container>
