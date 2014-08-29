@@ -6,7 +6,7 @@
 
     <parameters>
         <parameter key="m4nu_multi_domain.locale_listener.class">M4nu\MultiDomainBundle\EventListener\LocaleListener</parameter>
-        <parameter key="m4nu_multi_domain.route_host_listener.class">M4nu\MultiDomainBundle\EventListener\RouteHostListener</parameter>
+        <parameter key="m4nu_multi_domain.route_host_listener.class">M4nu\MultiDomainBundle\EventListener\RouteListener</parameter>
     </parameters>
 
     <services>

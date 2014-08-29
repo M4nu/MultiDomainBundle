@@ -5,7 +5,7 @@ use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Doctrine\ODM\PHPCR\Event\MoveEventArgs;
 use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
 
-class RouteHostListener
+class RouteListener
 {
     private $domains;
 
@@ -38,17 +38,11 @@ class RouteHostListener
             return;
         }
 
-        if ($host = $this->getHost($document->getId())) {
-            $document->setHost($host);
-        }
-    }
-
-    private function getHost($path)
-    {
         foreach ($this->routeBasePaths as $routeBasePath) {
-            foreach ($this->domains as $domain) {
-                if (0 === strpos($path, sprintf('%s/%s', $routeBasePath, $domain))) {
-                    return $domain;
+            foreach ($this->domains as $locale => $domain) {
+                if (0 === strpos($document->getId(), sprintf('%s/%s', $routeBasePath, $domain))) {
+                    $document->setHost($domain);
+                    $document->setRequirement('_locale', $locale);
                 }
             }
         }
