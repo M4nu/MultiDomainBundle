@@ -1,5 +1,5 @@
 {
-    "name": "manu/multi-domain-bundle",
+    "name": "m4nu/multi-domain-bundle",
     "description": "Adds multi-domain capabilities to Symfony Cmf RoutingBundle",
     "require": {
         "php": ">=5.3.3",
