@@ -25,14 +25,6 @@ class M4nuMultiDomainExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
 
-        $container
-            ->getDefinition('m4nu_multi_domain.base_path_resolver')
-            ->replaceArgument(1, $config['domains'])
-        ;
-
-        $container
-            ->getDefinition('m4nu_multi_domain.locale_listener')
-            ->replaceArgument(0, $config['domains'])
-        ;
+        $container->setParameter('m4nu_multi_domain.domains', $config['domains']);
     }
 }

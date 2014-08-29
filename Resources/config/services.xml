@@ -5,19 +5,14 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="m4nu_multi_domain.base_path_resolver.class">M4nu\MultiDomainBundle\Resolver\MultiDomainBasePathResolver</parameter>
         <parameter key="m4nu_multi_domain.locale_listener.class">M4nu\MultiDomainBundle\EventListener\LocaleListener</parameter>
         <parameter key="m4nu_multi_domain.route_host_listener.class">M4nu\MultiDomainBundle\EventListener\RouteHostListener</parameter>
     </parameters>
 
     <services>
-        <service id="m4nu_multi_domain.base_path_resolver" class="%m4nu_multi_domain.base_path_resolver.class%">
-            <argument>%cmf_routing.dynamic.persistence.phpcr.route_basepaths%</argument>
-            <argument />
-        </service>
-
         <service id="m4nu_multi_domain.route_host_listener" class="%m4nu_multi_domain.route_host_listener.class%">
-            <argument type="service" id="m4nu_multi_domain.base_path_resolver" />
+            <argument>%cmf_routing.dynamic.persistence.phpcr.route_basepaths%</argument>
+            <argument>%m4nu_multi_domain.domains%</argument>
             <tag name="doctrine_phpcr.event_listener" event="postLoad" />
             <tag name="doctrine_phpcr.event_listener" event="postPersist" />
             <tag name="doctrine_phpcr.event_listener" event="postMove" />
@@ -25,7 +20,7 @@
 
         <service id="m4nu_multi_domain.locale_listener" class="%m4nu_multi_domain.locale_listener.class%">
             <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" />
-            <argument />
+            <argument>%m4nu_multi_domain.domains%</argument>
         </service>
     </services>
 </container>

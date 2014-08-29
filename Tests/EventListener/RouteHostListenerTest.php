@@ -8,34 +8,38 @@ use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
 
 class RouteHostListenerTest extends \PHPUnit_Framework_TestCase
 {
+    private $routeBasePaths = array('/cms/routes', '/cms/routes2');
+    private $domains = array('www.example.org', 'fr.example.org');
+    private $route;
+
+    public function setup()
+    {
+        $this->route = new Route();
+        $this->route->setId('/cms/routes/fr.example.org/home');
+    }
+
     public function testUpdateHost()
     {
         $host = 'fr.example.org';
         $dm = $this->getMockBuilder('Doctrine\ODM\PHPCR\DocumentManager')
             ->disableOriginalConstructor()
-            ->getMock();
-        $basePathResolver = $this->getMock('M4nu\MultiDomainBundle\Resolver\BasePathResolverInterface');
-        $basePathResolver
-            ->expects($this->any())
-            ->method('getPathHost')
-            ->will($this->returnValue($host))
+            ->getMock()
         ;
 
-        $routeHostListener = new RouteHostListener($basePathResolver);
+        $routeHostListener = new RouteHostListener($this->routeBasePaths, $this->domains);
 
-        $document = new Route();
-        $event = new LifecycleEventArgs($document, $dm);
+        $route = $this->route;
+
+        $event = new LifecycleEventArgs($route, $dm);
         $routeHostListener->postLoad($event);
-        $this->assertEquals($host, $document->getHost());
+        $this->assertEquals($host, $route->getHost());
 
-        $document = new Route();
-        $event = new LifecycleEventArgs($document, $dm);
+        $event = new LifecycleEventArgs($route, $dm);
         $routeHostListener->postPersist($event);
-        $this->assertEquals($host, $document->getHost());
+        $this->assertEquals($host, $route->getHost());
 
-        $document = new Route();
-        $event = new MoveEventArgs($document, $dm, null, null);
+        $event = new MoveEventArgs($route, $dm, null, null);
         $routeHostListener->postMove($event);
-        $this->assertEquals($host, $document->getHost());
+        $this->assertEquals($host, $route->getHost());
     }
 }

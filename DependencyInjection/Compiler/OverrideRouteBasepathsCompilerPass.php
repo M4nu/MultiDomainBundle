@@ -3,7 +3,6 @@ namespace M4nu\MultiDomainBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\ExpressionLanguage\Expression;
 
 class OverrideRouteBasepathsCompilerPass implements CompilerPassInterface
 {
@@ -12,16 +11,25 @@ class OverrideRouteBasepathsCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $basePathResolverExpression = new Expression('service("m4nu_multi_domain.base_path_resolver").getRouteBasepaths()');
+        $routeBasePaths = $container->getParameter('cmf_routing.dynamic.persistence.phpcr.route_basepaths');
+        $domains = $container->getParameter('m4nu_multi_domain.domains');
+
+        $routeBasePathsWithDomains = array();
+
+        foreach ($routeBasePaths as $routeBasePath) {
+            foreach ($domains as $domain) {
+                $routeBasePathsWithDomains[] = sprintf('%s/%s', $routeBasePath, $domain);
+            }
+        }
 
         $container
             ->getDefinition('cmf_routing.phpcr_candidates_prefix')
-            ->replaceArgument(0, $basePathResolverExpression)
+            ->replaceArgument(0, $routeBasePathsWithDomains)
         ;
 
         $container
             ->getDefinition('cmf_routing.initializer')
-            ->replaceArgument(1, $basePathResolverExpression)
+            ->replaceArgument(1, $routeBasePathsWithDomains)
         ;
     }
 }

@@ -11,11 +11,12 @@ use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
  */
 class RouteHostListener
 {
-    private $basePathResolver;
+    private $domains;
 
-    public function __construct(BasePathResolverInterface $basePathResolver)
+    public function __construct(array $routeBasePaths, array $domains)
     {
-        $this->basePathResolver = $basePathResolver;
+        $this->routeBasePaths = $routeBasePaths;
+        $this->domains = $domains;
     }
 
     public function postLoad(LifecycleEventArgs $args)
@@ -41,8 +42,19 @@ class RouteHostListener
             return;
         }
 
-        if ($host = $this->basePathResolver->getPathHost($document->getId())) {
+        if ($host = $this->getHost($document->getId())) {
             $document->setHost($host);
+        }
+    }
+
+    private function getHost($path)
+    {
+        foreach ($this->routeBasePaths as $routeBasePath) {
+            foreach ($this->domains as $domain) {
+                if (0 === strpos($path, sprintf('%s/%s', $routeBasePath, $domain))) {
+                    return $domain;
+                }
+            }
         }
     }
 }
