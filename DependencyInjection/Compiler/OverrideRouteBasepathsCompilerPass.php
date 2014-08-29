@@ -26,10 +26,5 @@ class OverrideRouteBasepathsCompilerPass implements CompilerPassInterface
             ->getDefinition('cmf_routing.phpcr_candidates_prefix')
             ->replaceArgument(0, $routeBasePathsWithDomains)
         ;
-
-        $container
-            ->getDefinition('cmf_routing.initializer')
-            ->replaceArgument(1, $routeBasePathsWithDomains)
-        ;
     }
 }
