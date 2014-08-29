@@ -3,12 +3,8 @@ namespace M4nu\MultiDomainBundle\EventListener;
 
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Doctrine\ODM\PHPCR\Event\MoveEventArgs;
-use M4nu\MultiDomainBundle\Resolver\BasePathResolverInterface;
 use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
 
-/**
- * Update routes host attribute when they are created or moved
- */
 class RouteHostListener
 {
     private $domains;
