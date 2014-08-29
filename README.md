@@ -9,7 +9,7 @@ Symfony Cmf [RoutingBundle](https://github.com/symfony-cmf/RoutingBundle).
 
 ## Requirements
 
-* Symfony ~2.4
+* Symfony ~2.3
 * SymfonyCmfRoutingBundle ~1.2
 * See also the `require` section of [composer.json](composer.json)
 
