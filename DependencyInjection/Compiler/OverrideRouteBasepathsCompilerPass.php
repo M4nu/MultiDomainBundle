@@ -11,6 +11,10 @@ class OverrideRouteBasepathsCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
+        if (!$container->hasParameter('m4nu_multi_domain.backend_type_phpcr')) {
+            return;
+        }
+
         $routeBasePaths = $container->getParameter('cmf_routing.dynamic.persistence.phpcr.route_basepaths');
         $domains = $container->getParameter('m4nu_multi_domain.domains');
 

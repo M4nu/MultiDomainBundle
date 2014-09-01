@@ -45,11 +45,12 @@ public function registerBundles()
 
 ### Configuration
 
-You must define at least 1 domain, for example :
-
 ``` yaml
 # app/config/config.yml
 m4nu_multi_domain:
     domains:
         en: www.example.org
         fr: fr.example.org
+    persistence:
+        phpcr:
+            enabled: true
