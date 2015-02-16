@@ -35,15 +35,18 @@ class RouteListenerTest extends \PHPUnit_Framework_TestCase
         $routeHostListener->postLoad($event);
         $this->assertEquals($host, $route->getHost());
         $this->assertEquals($locale, $route->getRequirement('_locale'));
+        $this->assertEquals($locale, $route->getDefault('_locale'));
 
         $event = new LifecycleEventArgs($route, $dm);
         $routeHostListener->postPersist($event);
         $this->assertEquals($host, $route->getHost());
         $this->assertEquals($locale, $route->getRequirement('_locale'));
+        $this->assertEquals($locale, $route->getDefault('_locale'));
 
         $event = new MoveEventArgs($route, $dm, null, null);
         $routeHostListener->postMove($event);
         $this->assertEquals($host, $route->getHost());
         $this->assertEquals($locale, $route->getRequirement('_locale'));
+        $this->assertEquals($locale, $route->getDefault('_locale'));
     }
 }
