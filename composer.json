@@ -3,7 +3,7 @@
     "description": "Adds multi-domain capabilities to Symfony Cmf RoutingBundle",
     "require": {
         "php": ">=5.3.3",
-        "symfony-cmf/routing-bundle": "~1.2",
+        "symfony-cmf/routing-bundle": "~1.2|~2.0",
         "symfony/framework-bundle": "~2.3"
     },
     "require-dev": {
