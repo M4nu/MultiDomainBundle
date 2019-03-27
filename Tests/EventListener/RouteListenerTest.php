@@ -6,13 +6,13 @@ use Doctrine\ODM\PHPCR\Event\MoveEventArgs;
 use M4nu\MultiDomainBundle\EventListener\RouteListener;
 use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
 
-class RouteListenerTest extends \PHPUnit_Framework_TestCase
+class RouteListenerTest extends \PHPUnit\Framework\TestCase
 {
     private $routeBasePaths = array('/cms/routes', '/cms/routes2');
     private $domains = array('en' => 'www.example.org', 'fr' => 'fr.example.org');
     private $route;
 
-    public function setup()
+    public function setUp(): void
     {
         $this->route = new Route();
         $this->route->setId('/cms/routes/fr.example.org/home');
