@@ -7,6 +7,7 @@ use Symfony\Cmf\Bundle\RoutingBundle\Doctrine\Phpcr\Route;
 
 class RouteListener
 {
+    private $routeBasePaths;
     private $domains;
 
     public function __construct(array $routeBasePaths, array $domains)
@@ -40,7 +41,7 @@ class RouteListener
 
         foreach ($this->routeBasePaths as $routeBasePath) {
             foreach ($this->domains as $locale => $domain) {
-                if (0 === strpos($document->getId(), sprintf('%s/%s', $routeBasePath, $domain))) {
+                if (0 === strpos($document->getId(), sprintf('%s/%s', $routeBasePath, $locale))) {
                     $document->setHost($domain);
                     $document->setRequirement('_locale', $locale);
 

@@ -18,17 +18,17 @@ class OverrideRouteBasepathsCompilerPass implements CompilerPassInterface
         $routeBasePaths = $container->getParameter('cmf_routing.dynamic.persistence.phpcr.route_basepaths');
         $domains = $container->getParameter('m4nu_multi_domain.domains');
 
-        $routeBasePathsWithDomains = array();
+        $routeBasePathsWithLocale = array();
 
         foreach ($routeBasePaths as $routeBasePath) {
-            foreach ($domains as $domain) {
-                $routeBasePathsWithDomains[] = sprintf('%s/%s', $routeBasePath, $domain);
+            foreach ($domains as $locale => $domain) {
+                $routeBasePathsWithLocale[] = sprintf('%s/%s', $routeBasePath, $locale);
             }
         }
 
         $container
             ->getDefinition('cmf_routing.phpcr_candidates_prefix')
-            ->replaceArgument(0, $routeBasePathsWithDomains)
+            ->replaceArgument(0, $routeBasePathsWithLocale)
         ;
     }
 }
