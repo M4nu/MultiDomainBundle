@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
-class LocaleListenerTest extends \PHPUnit_Framework_TestCase
+class LocaleListenerTest extends \PHPUnit\Framework\TestCase
 {
     private $domains = array(
         'en' => 'en.example.org',
@@ -27,7 +27,7 @@ class LocaleListenerTest extends \PHPUnit_Framework_TestCase
      */
     public function testOnKernelRequest($host, $locale)
     {
-        $kernel = $this->getMock('Symfony\Component\HttpKernel\HttpKernelInterface');
+        $kernel = $this->createMock('Symfony\Component\HttpKernel\HttpKernelInterface');
         $request = new Request(array(), array(), array(), array(), array(), array('HTTP_HOST' => $host));
         $event = new GetResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST);
 
