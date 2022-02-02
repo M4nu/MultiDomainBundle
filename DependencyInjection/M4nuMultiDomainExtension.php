@@ -27,6 +27,7 @@ class M4nuMultiDomainExtension extends Extension
             $loader->load('services.xml');
 
             $container->setParameter($this->getAlias() . '.domains', $config['domains']);
+            $container->setParameter($this->getAlias() . '.excluded_paths', $config['excluded_paths']);
             $container->setParameter($this->getAlias() . '.backend_type_phpcr', true);
         }
     }
