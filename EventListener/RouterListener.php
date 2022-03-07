@@ -3,7 +3,6 @@ namespace M4nu\MultiDomainBundle\EventListener;
 
 use Symfony\Cmf\Component\Routing\Event\RouterGenerateEvent;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouterInterface;
 
 class RouterListener
@@ -28,7 +27,7 @@ class RouterListener
             $domain = $this->domains[$locale];
 
             $event->setReferenceType(UrlGeneratorInterface::ABSOLUTE_URL);
-            $this->updateRouterContext($domain, $locale);
+            $this->updateRouterContext($domain);
 
             return;
         }
@@ -43,7 +42,8 @@ class RouterListener
         foreach ($this->routeBasePaths as $routeBasePath) {
             foreach ($this->domains as $locale => $domain) {
                 if (0 === strpos($route, sprintf('%s/%s', $routeBasePath, $locale))) {
-                    $this->updateRouterContext($domain, $locale);
+                    $this->updateRouterContext($domain);
+                    $event->setParameter('_locale', $locale);
 
                     return;
                 }
@@ -51,12 +51,11 @@ class RouterListener
         }
     }
 
-    private function updateRouterContext(string $host, string $locale): void
+    private function updateRouterContext(string $host): void
     {
         $this->router
             ->getContext()
             ->setHost($host)
-            ->setParameter('_locale', $locale)
         ;
     }
 }
