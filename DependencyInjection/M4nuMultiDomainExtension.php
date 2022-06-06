@@ -22,15 +22,13 @@ class M4nuMultiDomainExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.xml');
-
-        $container->setParameter($this->getAlias() . '.domains', $config['domains']);
-
         if ($config['persistence']['phpcr']['enabled']) {
-            $container->setParameter($this->getAlias() . '.backend_type_phpcr', true);
+            $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+            $loader->load('services.xml');
 
-            $loader->load('phpcr.xml');
+            $container->setParameter($this->getAlias() . '.domains', $config['domains']);
+            $container->setParameter($this->getAlias() . '.excluded_paths', $config['excluded_paths']);
+            $container->setParameter($this->getAlias() . '.backend_type_phpcr', true);
         }
     }
 }

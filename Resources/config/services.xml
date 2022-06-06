@@ -6,11 +6,20 @@
 
     <parameters>
         <parameter key="m4nu_multi_domain.locale_listener.class">M4nu\MultiDomainBundle\EventListener\LocaleListener</parameter>
+        <parameter key="m4nu_multi_domain.router_listener.class">M4nu\MultiDomainBundle\EventListener\RouterListener</parameter>
     </parameters>
 
     <services>
         <service id="m4nu_multi_domain.locale_listener" class="%m4nu_multi_domain.locale_listener.class%">
-            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" />
+            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" priority="20" />
+            <argument>%m4nu_multi_domain.domains%</argument>
+            <argument>%m4nu_multi_domain.excluded_paths%</argument>
+        </service>
+
+        <service id="m4nu_multi_domain.router_listener" class="%m4nu_multi_domain.router_listener.class%">
+            <tag name="kernel.event_listener" event="cmf_routing.pre_dynamic_generate" method="onGenerate" />
+            <argument type="service" id="router" />
+            <argument>%cmf_routing.dynamic.persistence.phpcr.route_basepaths%</argument>
             <argument>%m4nu_multi_domain.domains%</argument>
         </service>
     </services>
