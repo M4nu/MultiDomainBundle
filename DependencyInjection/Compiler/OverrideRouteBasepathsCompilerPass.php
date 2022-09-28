@@ -1,6 +1,7 @@
 <?php
 namespace M4nu\MultiDomainBundle\DependencyInjection\Compiler;
 
+use M4nu\MultiDomainBundle\Doctrine\Phpcr\HostCandidates;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -28,7 +29,10 @@ class OverrideRouteBasepathsCompilerPass implements CompilerPassInterface
 
         $container
             ->getDefinition('cmf_routing.phpcr_candidates_prefix')
+            ->setClass(HostCandidates::class)
             ->replaceArgument(0, $routeBasePathsWithLocale)
+            ->replaceArgument(1, $domains)
+            ->setArgument(4, $routeBasePaths)
         ;
     }
 }
