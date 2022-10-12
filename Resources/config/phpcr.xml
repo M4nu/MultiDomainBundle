@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="m4nu_multi_domain.route_listener.class">M4nu\MultiDomainBundle\EventListener\RouteListener</parameter>
+    </parameters>
+
+    <services>
+        <service id="m4nu_multi_domain.route_listener" class="%m4nu_multi_domain.route_listener.class%">
+            <argument>%cmf_routing.dynamic.persistence.phpcr.route_basepaths%</argument>
+            <argument>%m4nu_multi_domain.domains%</argument>
+            <tag name="doctrine_phpcr.event_listener" event="postLoad" />
+            <tag name="doctrine_phpcr.event_listener" event="postPersist" />
+            <tag name="doctrine_phpcr.event_listener" event="postMove" />
+        </service>
+    </services>
+</container>
